@@ -15,6 +15,7 @@
     "fix:prettier": "prettier --cache --write ."
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.15",
     "next": "14.2.12",
     "react": "^18",
     "react-dom": "^18"
