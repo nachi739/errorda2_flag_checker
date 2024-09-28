@@ -1,14 +1,15 @@
-import { getAllPosts } from "@/lib/notionAPI";
+import { getAllPosts, getPostsForTopPage } from "@/lib/notionAPI";
 import localFont from "next/font/local";
 import Image from "next/image";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
-export const getStaticProps = async () => {
-    const allPosts = await getAllPosts();
+import { GetStaticProps } from "next";
+export const getStaticProps: GetStaticProps = async () => {
+    const displayPosts = await getPostsForTopPage(4);
 
     return {
         props: {
-            allPosts,
+            displayPosts,
         },
         revalidate: 60 * 60 * 6,
     };
@@ -26,8 +27,7 @@ interface HomeProps {
     allPosts: Post[];
 }
 
-export default function Home({ allPosts }: HomeProps) {
-    console.log(allPosts);
+export default function Home({ displayPosts }: { displayPosts: Post[] }) {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -38,7 +38,7 @@ export default function Home({ allPosts }: HomeProps) {
 
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                {allPosts.map(
+                {displayPosts.map(
                     (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
                         <div className="mx-4">
                             <SinglePost
