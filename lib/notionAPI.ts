@@ -17,13 +17,13 @@ export const getAllPosts = async () => {
 
     return allPosts.map((post) => {
         return getPageMetaData(post);
-        //return post;
     });
 };
 
+//今後修正する。
 const getPageMetaData = (post) => {
-    const getTags = (tags) => {
-        const allTags = tags.map((tag) => {
+    const getTags = (tags: { name: string }[]) => {
+        const allTags = tags.map((tag: { name: string }) => {
             return tag.name;
         });
 
@@ -40,7 +40,7 @@ const getPageMetaData = (post) => {
     };
 };
 
-export const getSinglePost = async (slug) => {
+export const getSinglePost = async (slug: string) => {
     const response = await notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID || "",
         filter: {
@@ -55,10 +55,9 @@ export const getSinglePost = async (slug) => {
 
     const page = response.results[0];
     const metadata = getPageMetaData(page);
-    //console.log(metadata);
     const mdBlocks = await n2m.pageToMarkdown(page.id);
     const mdString = n2m.toMarkdownString(mdBlocks);
-    console.log(mdString.parent);
+
     return {
         metadata,
         markdown: mdString,
