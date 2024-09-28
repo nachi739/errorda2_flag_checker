@@ -14,7 +14,19 @@ export const getStaticProps = async () => {
     };
 };
 
-export default function Home({ allPosts }) {
+interface Post {
+    title: string;
+    description: string;
+    date: string;
+    tags: string[];
+    slug: string;
+}
+
+interface HomeProps {
+    allPosts: Post[];
+}
+
+export default function Home({ allPosts }: HomeProps) {
     console.log(allPosts);
     return (
         <div className="container h-full w-full mx-auto">
@@ -26,17 +38,19 @@ export default function Home({ allPosts }) {
 
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                {allPosts.map((post) => (
-                    <div className="mx-4">
-                        <SinglePost
-                            title={post.title}
-                            description={post.description}
-                            date={post.date}
-                            tags={post.tags}
-                            slug={post.slug}
-                        />
-                    </div>
-                ))}
+                {allPosts.map(
+                    (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
+                        <div className="mx-4">
+                            <SinglePost
+                                title={post.title}
+                                description={post.description}
+                                date={post.date}
+                                tags={post.tags}
+                                slug={post.slug}
+                            />
+                        </div>
+                    ),
+                )}
             </main>
         </div>
     );
