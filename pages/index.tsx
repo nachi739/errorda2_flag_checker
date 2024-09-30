@@ -44,6 +44,7 @@ export default function Home({ displayPosts }: { displayPosts: Post[] }) {
                                 date={post.date}
                                 tags={post.tags}
                                 slug={post.slug}
+                                isPaginationPage={false}
                             />
                         </div>
                     ),

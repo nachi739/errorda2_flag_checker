@@ -1,23 +1,38 @@
-import { getAllPosts, getPostsForTopPage } from "@/lib/notionAPI";
+import { getAllPosts, getNumberOfPages, getPostsByPage, getPostsForTopPage } from "@/lib/notionAPI";
 import localFont from "next/font/local";
 import Image from "next/image";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Pagination from "@/components/Pagination/Pagination";
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    const numberOfPage = await getNumberOfPages();
+
+    let params = [];
+    for (let i = 1; i <= numberOfPage; i++) {
+        params.push({ params: { page: i.toString() } });
+    }
     return {
-        paths: [{ params: { page: "1" } }, { params: { page: "2" } }],
+        paths: params,
         fallback: "blocking",
     };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-    const displayPosts = await getPostsForTopPage(4);
+export const getStaticProps: GetStaticProps = async (context) => {
+    const currentPage = context.params?.page;
+    if (!currentPage) {
+        return {
+            notFound: true,
+        };
+    }
+    const postsByPage = await getPostsByPage(parseInt(currentPage.toString(), 10));
+    const numberOfPage = await getNumberOfPages();
 
     return {
         props: {
-            displayPosts,
+            postsByPage,
+            numberOfPage,
         },
         revalidate: 60 * 60 * 6,
     };
@@ -32,10 +47,11 @@ interface Post {
 }
 
 interface PageListProps {
-    displayPosts: Post[];
+    postsByPage: Post[];
+    numberOfPage: number;
 }
 
-const PageList = ({ displayPosts }: PageListProps) => {
+const PageList = ({ postsByPage, numberOfPage }: PageListProps) => {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -46,19 +62,23 @@ const PageList = ({ displayPosts }: PageListProps) => {
 
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                {displayPosts.map(
-                    (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
-                        <div className="mx-4">
-                            <SinglePost
-                                title={post.title}
-                                description={post.description}
-                                date={post.date}
-                                tags={post.tags}
-                                slug={post.slug}
-                            />
-                        </div>
-                    ),
-                )}
+                <section className="sm:grid grid-cols-2 w-5/6 gap-3 mx-auto">
+                    {postsByPage.map(
+                        (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
+                            <div>
+                                <SinglePost
+                                    title={post.title}
+                                    description={post.description}
+                                    date={post.date}
+                                    tags={post.tags}
+                                    slug={post.slug}
+                                    isPaginationPage={true}
+                                />
+                            </div>
+                        ),
+                    )}
+                </section>
+                <Pagination numberOfPage={numberOfPage} />
             </main>
         </div>
     );
