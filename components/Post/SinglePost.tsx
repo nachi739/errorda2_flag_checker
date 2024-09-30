@@ -20,8 +20,10 @@ export const SinglePost = (props: Props) => {
                     <Link href={`/posts/${slug}`}>{title}</Link>
                 </h2>
                 <div className="text-gray-400 mr-2">{date}</div>
-                {tags.map((tag) => (
-                    <span className="text-white bg-gray-500 rounded-xl px-2 pb-0.5 font-medium mr-2">{tag}</span>
+                {tags.map((tag: string, index: number) => (
+                    <span className="text-white bg-gray-500 rounded-xl px-2 pb-0.5 font-medium mr-2" key={index}>
+                        {tag}
+                    </span>
                 ))}
             </div>
             <p className="text-white">{description}</p>
@@ -33,8 +35,10 @@ export const SinglePost = (props: Props) => {
                     <Link href={`/posts/${slug}`}>{title}</Link>
                 </h2>
                 <div className="text-gray-100">{date}</div>
-                {tags.map((tag) => (
-                    <span className="text-white bg-gray-500 rounded-xl px-2 pb-0.5 font-medium">{tag}</span>
+                {tags.map((tag: string, index: number) => (
+                    <span className="text-white bg-gray-500 rounded-xl px-2 pb-0.5 font-medium" key={index}>
+                        {tag}
+                    </span>
                 ))}
             </div>
             <p className="text-white">{description}</p>

@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 interface Post {
+    id: string;
     title: string;
     description: string;
     date: string;
@@ -63,20 +64,18 @@ const PageList = ({ postsByPage, numberOfPage }: PageListProps) => {
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
                 <section className="sm:grid grid-cols-2 w-5/6 gap-3 mx-auto">
-                    {postsByPage.map(
-                        (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
-                            <div>
-                                <SinglePost
-                                    title={post.title}
-                                    description={post.description}
-                                    date={post.date}
-                                    tags={post.tags}
-                                    slug={post.slug}
-                                    isPaginationPage={true}
-                                />
-                            </div>
-                        ),
-                    )}
+                    {postsByPage.map((post: Post) => (
+                        <div key={post.id}>
+                            <SinglePost
+                                title={post.title}
+                                description={post.description}
+                                date={post.date}
+                                tags={post.tags}
+                                slug={post.slug}
+                                isPaginationPage={true}
+                            />
+                        </div>
+                    ))}
                 </section>
                 <Pagination numberOfPage={numberOfPage} />
             </main>

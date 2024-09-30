@@ -17,6 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 interface Post {
+    id: string;
     title: string;
     description: string;
     date: string;
@@ -36,8 +37,15 @@ export default function Home({ displayPosts }: { displayPosts: Post[] }) {
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
                 {displayPosts.map(
-                    (post: { title: string; description: string; date: string; tags: string[]; slug: string }) => (
-                        <div className="mx-4">
+                    (post: {
+                        id: string;
+                        title: string;
+                        description: string;
+                        date: string;
+                        tags: string[];
+                        slug: string;
+                    }) => (
+                        <div className="mx-4" key={post.id}>
                             <SinglePost
                                 title={post.title}
                                 description={post.description}
