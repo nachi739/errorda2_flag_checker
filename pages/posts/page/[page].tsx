@@ -3,8 +3,15 @@ import localFont from "next/font/local";
 import Image from "next/image";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
-import { GetStaticProps } from "next";
-import Link from "next/link";
+import { GetStaticPaths, GetStaticProps } from "next";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+        paths: [{ params: { page: "1" } }, { params: { page: "2" } }],
+        fallback: "blocking",
+    };
+};
+
 export const getStaticProps: GetStaticProps = async () => {
     const displayPosts = await getPostsForTopPage(4);
 
@@ -24,7 +31,11 @@ interface Post {
     slug: string;
 }
 
-export default function Home({ displayPosts }: { displayPosts: Post[] }) {
+interface PageListProps {
+    displayPosts: Post[];
+}
+
+const PageList = ({ displayPosts }: PageListProps) => {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -48,10 +59,9 @@ export default function Home({ displayPosts }: { displayPosts: Post[] }) {
                         </div>
                     ),
                 )}
-                <Link href="/posts/page/1" className="mb-6 lg:w-1/2 mx-auto px-5 block text-right">
-                    ...もっと見る
-                </Link>
             </main>
         </div>
     );
-}
+};
+
+export default PageList;
