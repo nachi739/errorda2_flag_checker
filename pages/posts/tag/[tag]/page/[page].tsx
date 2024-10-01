@@ -1,4 +1,12 @@
-import { getAllPosts, getNumberOfPages, getPostsByPage, getPostsForTopPage } from "@/lib/notionAPI";
+import {
+    getAllPosts,
+    getNumberOfPages,
+    getPostsByPage,
+    getPostsByTagAndPage,
+    getPostsForTopPage,
+    getNumberOfPagesByTag,
+    getAllTags,
+} from "@/lib/notionAPI";
 import localFont from "next/font/local";
 import Image from "next/image";
 import Head from "next/head";
@@ -7,12 +15,19 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Pagination from "@/components/Pagination/Pagination";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const numberOfPage = await getNumberOfPages();
+    const allTags = await getAllTags();
+    let params: { params: { tag: string; page: string } }[] = [];
 
-    let params = [];
-    for (let i = 1; i <= numberOfPage; i++) {
-        params.push({ params: { page: i.toString() } });
-    }
+    await Promise.all(
+        allTags.map((tag: string) => {
+            return getNumberOfPagesByTag(tag).then((numberOfPagesByTag: number) => {
+                for (let i = 1; i <= numberOfPagesByTag; i++) {
+                    params.push({ params: { tag: tag, page: i.toString() } });
+                }
+            });
+        }),
+    );
+
     return {
         paths: params,
         fallback: "blocking",
@@ -20,19 +35,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const currentPage = context.params?.page;
-    if (!currentPage) {
-        return {
-            notFound: true,
-        };
-    }
-    const postsByPage = await getPostsByPage(parseInt(currentPage.toString(), 10));
-    const numberOfPage = await getNumberOfPages();
+    const currentPage: string = context.params?.page?.toString() || "";
+    const currentTag: string = context.params?.tag?.toString() || "";
+
+    const upperCaseCurrentTag = currentTag.charAt(0).toUpperCase() + currentTag.slice(1);
+
+    const posts = await getPostsByTagAndPage(upperCaseCurrentTag, parseInt(currentPage, 10));
+
+    const numberOfPagesByTag = await getNumberOfPagesByTag(upperCaseCurrentTag);
+    const allTags = await getAllTags();
 
     return {
         props: {
-            postsByPage,
-            numberOfPage,
+            posts,
+            numberOfPagesByTag,
+            currentTag,
         },
         revalidate: 60 * 60 * 6,
     };
@@ -48,11 +65,13 @@ interface Post {
 }
 
 interface PageListProps {
-    postsByPage: Post[];
+    posts: Post[];
     numberOfPage: number;
+    numberOfPagesByTag: number;
+    currentTag: string;
 }
 
-const PageList = ({ postsByPage, numberOfPage }: PageListProps) => {
+const TagPageList = ({ numberOfPagesByTag, posts, currentTag }: PageListProps) => {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -64,7 +83,7 @@ const PageList = ({ postsByPage, numberOfPage }: PageListProps) => {
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
                 <section className="sm:grid grid-cols-2 w-5/6 gap-3 mx-auto">
-                    {postsByPage.map((post: Post) => (
+                    {posts.map((post: Post) => (
                         <div key={post.id}>
                             <SinglePost
                                 title={post.title}
@@ -77,10 +96,10 @@ const PageList = ({ postsByPage, numberOfPage }: PageListProps) => {
                         </div>
                     ))}
                 </section>
-                <Pagination numberOfPage={numberOfPage} tag="" />
+                <Pagination numberOfPage={numberOfPagesByTag} tag={currentTag} />
             </main>
         </div>
     );
 };
 
-export default PageList;
+export default TagPageList;
