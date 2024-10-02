@@ -1,16 +1,18 @@
-import { getAllPosts, getPostsForTopPage } from "@/lib/notionAPI";
-import localFont from "next/font/local";
-import Image from "next/image";
+import { getAllTags, getPostsForTopPage } from "@/lib/notionAPI";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
 import { GetStaticProps } from "next";
 import Link from "next/link";
+import Tag from "@/components/Tag/Tag";
+
 export const getStaticProps: GetStaticProps = async () => {
     const displayPosts = await getPostsForTopPage(4);
+    const allTags = await getAllTags();
 
     return {
         props: {
             displayPosts,
+            allTags,
         },
         revalidate: 60 * 60 * 6,
     };
@@ -25,7 +27,7 @@ interface Post {
     slug: string;
 }
 
-export default function Home({ displayPosts }: { displayPosts: Post[] }) {
+export default function Home({ displayPosts, allTags }: { displayPosts: Post[]; allTags: string[] }) {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -60,6 +62,7 @@ export default function Home({ displayPosts }: { displayPosts: Post[] }) {
                 <Link href="/posts/page/1" className="mb-6 lg:w-1/2 mx-auto px-5 block text-right">
                     ...もっと見る
                 </Link>
+                <Tag tags={allTags} />
             </main>
         </div>
     );
