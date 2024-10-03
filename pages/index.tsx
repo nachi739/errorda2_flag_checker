@@ -1,18 +1,20 @@
-import { getAllTags, getPostsForTopPage } from "@/lib/notionAPI";
+import { getAllTags, getPostsForTopPage, getPostsByPage, getNumberOfPages } from "@/lib/notionAPI";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
 import { GetStaticProps } from "next";
-import Link from "next/link";
 import Tag from "@/components/Tag/Tag";
+import Pagination from "@/components/Pagination/Pagination";
 
 export const getStaticProps: GetStaticProps = async () => {
     const displayPosts = await getPostsForTopPage(4);
     const allTags = await getAllTags();
+    const numberOfPage = await getNumberOfPages();
 
     return {
         props: {
             displayPosts,
             allTags,
+            numberOfPage,
         },
         revalidate: 60 * 60 * 6,
     };
@@ -27,7 +29,15 @@ interface Post {
     slug: string;
 }
 
-export default function Home({ displayPosts, allTags }: { displayPosts: Post[]; allTags: string[] }) {
+export default function Home({
+    displayPosts,
+    allTags,
+    numberOfPage,
+}: {
+    displayPosts: Post[];
+    allTags: string[];
+    numberOfPage: number;
+}) {
     return (
         <div className="container h-full w-full mx-auto">
             <Head>
@@ -37,31 +47,31 @@ export default function Home({ displayPosts, allTags }: { displayPosts: Post[]; 
             </Head>
 
             <main className="container w-full mt-16">
-                <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                {displayPosts.map(
-                    (post: {
-                        id: string;
-                        title: string;
-                        description: string;
-                        date: string;
-                        tags: string[];
-                        slug: string;
-                    }) => (
-                        <div className="mx-4" key={post.id}>
-                            <SinglePost
-                                title={post.title}
-                                description={post.description}
-                                date={post.date}
-                                tags={post.tags}
-                                slug={post.slug}
-                                isPaginationPage={false}
-                            />
-                        </div>
-                    ),
-                )}
-                <Link href="/posts/page/1" className="mb-6 lg:w-1/2 mx-auto px-5 block text-right">
-                    ...もっと見る
-                </Link>
+                <h1 className="text-5x1 font-medium text-center mb-16">Output-list</h1>
+                <section className="sm:grid grid-cols-1 gap-3 mx-auto">
+                    {displayPosts.map(
+                        (post: {
+                            id: string;
+                            title: string;
+                            description: string;
+                            date: string;
+                            tags: string[];
+                            slug: string;
+                        }) => (
+                            <div className="mx-4" key={post.id}>
+                                <SinglePost
+                                    title={post.title}
+                                    description={post.description}
+                                    date={post.date}
+                                    tags={post.tags}
+                                    slug={post.slug}
+                                    isPaginationPage={false}
+                                />
+                            </div>
+                        ),
+                    )}
+                </section>
+                <Pagination numberOfPage={numberOfPage} tag="" />
                 <Tag tags={allTags} />
             </main>
         </div>

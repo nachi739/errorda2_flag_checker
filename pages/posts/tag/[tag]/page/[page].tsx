@@ -1,3 +1,5 @@
+/* Tag検索で表示されるページ */
+
 import { getPostsByTagAndPage, getNumberOfPagesByTag, getAllTags } from "@/lib/notionAPI";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
@@ -74,8 +76,11 @@ const TagPageList = ({ numberOfPagesByTag, posts, currentTag, allTags }: PageLis
             </Head>
 
             <main className="container w-full mt-16">
-                <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                <section className="sm:grid grid-cols-2 w-5/6 gap-3 mx-auto">
+                <h1 className="text-5x1 font-medium text-center">Output-list</h1>
+                <p className="py-1.5 px-2 rounded-full mb-16 w-1/2 bg-black text-white text-center mx-auto">
+                    {currentTag}
+                </p>
+                <section className="sm:grid grid-cols-1 w-1/2 gap-3 mx-auto">
                     {posts.map((post: Post) => (
                         <div key={post.id}>
                             <SinglePost

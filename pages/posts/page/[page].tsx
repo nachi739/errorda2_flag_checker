@@ -1,3 +1,5 @@
+/* ...See moreで表示されるページ */
+
 import { getAllTags, getNumberOfPages, getPostsByPage } from "@/lib/notionAPI";
 import Head from "next/head";
 import { SinglePost } from "@/components/Post/SinglePost";
@@ -65,8 +67,8 @@ const PageList = ({ postsByPage, numberOfPage, allTags }: PageListProps) => {
             </Head>
 
             <main className="container w-full mt-16">
-                <h1 className="text-5x1 font-medium text-center mb-16">Errorda2</h1>
-                <section className="sm:grid grid-cols-2 w-5/6 gap-3 mx-auto">
+                <h1 className="text-5x1 font-medium text-center mb-16">Output-list</h1>
+                <section className="sm:grid grid-cols-1 w-1/2 gap-3 mx-auto">
                     {postsByPage.map((post: Post) => (
                         <div key={post.id}>
                             <SinglePost
