@@ -1,16 +1,17 @@
 /* ...See moreで表示されるページ */
 
-import { getAllTags, getNumberOfPages, getPostsByPage } from "@/lib/notionAPI";
-import Head from "next/head";
-import { SinglePost } from "@/components/Post/SinglePost";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
+
 import Pagination from "@/components/Pagination/Pagination";
+import { SinglePost } from "@/components/Post/SinglePost";
 import Tag from "@/components/Tag/Tag";
+import { getAllTags, getNumberOfPages, getPostsByPage } from "@/lib/notionAPI";
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const numberOfPage = await getNumberOfPages();
 
-    let params = [];
+    const params = [];
     for (let i = 1; i <= numberOfPage; i++) {
         params.push({ params: { page: i.toString() } });
     }

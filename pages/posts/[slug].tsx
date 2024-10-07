@@ -1,12 +1,13 @@
 /* 記事詳細ページ */
 
+import { GetStaticProps } from "next";
+import Link from "next/link";
 import React from "react";
-import { getAllPosts, getSinglePost } from "@/lib/notionAPI";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import Link from "next/link";
-import { GetStaticProps } from "next";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+import { getAllPosts, getSinglePost } from "@/lib/notionAPI";
 
 export const getStaticPaths = async () => {
     const allPosts = await getAllPosts();

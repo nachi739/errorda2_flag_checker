@@ -1,7 +1,8 @@
-import { getNumberOfPages } from "@/lib/notionAPI";
-import { getPageLink } from "@/lib/page-helper";
 import Link from "next/link";
 import React from "react";
+
+import { getNumberOfPages } from "@/lib/notionAPI";
+import { getPageLink } from "@/lib/page-helper";
 
 interface Props {
     numberOfPage: number;
@@ -11,7 +12,7 @@ interface Props {
 const Pagination = (props: Props) => {
     const { numberOfPage, tag } = props;
 
-    let pages: number[] = [];
+    const pages: number[] = [];
     for (let i = 1; i <= numberOfPage; i++) {
         pages.push(i);
     }

@@ -1,9 +1,10 @@
-import { getAllTags, getPostsForTopPage, getPostsByPage, getNumberOfPages } from "@/lib/notionAPI";
-import Head from "next/head";
-import { SinglePost } from "@/components/Post/SinglePost";
 import { GetStaticProps } from "next";
-import Tag from "@/components/Tag/Tag";
+import Head from "next/head";
+
 import Pagination from "@/components/Pagination/Pagination";
+import { SinglePost } from "@/components/Post/SinglePost";
+import Tag from "@/components/Tag/Tag";
+import { getAllTags, getNumberOfPages, getPostsByPage, getPostsForTopPage } from "@/lib/notionAPI";
 
 export const getStaticProps: GetStaticProps = async () => {
     const displayPosts = await getPostsForTopPage(4);
