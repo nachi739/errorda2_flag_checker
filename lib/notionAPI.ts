@@ -28,8 +28,8 @@ export const getAllPosts = async () => {
 
     const allPosts = posts.results;
 
-    return allPosts.map((post) => {
-        return getPageMetaData(post);
+    return allPosts.map((post: any) => {
+        return getPageMetaData(post as Post);
     });
 };
 
@@ -83,6 +83,18 @@ const getPageMetaData = (post: Post) => {
     };
 };
 
+const isPost = (page: any): page is Post => {
+    return (
+        page &&
+        page.properties &&
+        page.properties.Title &&
+        page.properties.Description &&
+        page.properties.Date &&
+        page.properties.Slug &&
+        page.properties.Tags
+    );
+};
+
 export const getSinglePost = async (slug: string) => {
     const response = await notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID || "",
@@ -97,6 +109,9 @@ export const getSinglePost = async (slug: string) => {
     });
 
     const page = response.results[0];
+    if (!isPost(page)) {
+        throw new Error("Page does not match Post interface");
+    }
     const metadata = getPageMetaData(page);
     const mdBlocks = await n2m.pageToMarkdown(page.id);
     const mdString = n2m.toMarkdownString(mdBlocks);
