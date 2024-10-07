@@ -62,20 +62,14 @@ const Post: React.FC<PostProps> = ({ post }) => {
             <div className="mt-10 font-medium">
                 <ReactMarkdown
                     components={{
-                        code(props) {
-                            const { children, className, node, ...rest } = props;
+                        code({ className, children }) {
                             const match = /language-(\w+)/.exec(className || "");
                             return match ? (
-                                <SyntaxHighlighter
-                                    PreTag="div"
-                                    children={String(children).replace(/\n$/, "")}
-                                    language={match[1]}
-                                    style={vscDarkPlus}
-                                />
+                                <SyntaxHighlighter language={match[1]} PreTag="div" style={vscDarkPlus}>
+                                    {String(children).replace(/\n$/, "")}
+                                </SyntaxHighlighter>
                             ) : (
-                                <code {...rest} className={className}>
-                                    {children}
-                                </code>
+                                <code>{children}</code>
                             );
                         },
                     }}
