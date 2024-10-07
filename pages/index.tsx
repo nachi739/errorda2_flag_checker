@@ -4,7 +4,7 @@ import Head from "next/head";
 import Pagination from "@/components/Pagination/Pagination";
 import { SinglePost } from "@/components/Post/SinglePost";
 import Tag from "@/components/Tag/Tag";
-import { getAllTags, getNumberOfPages, getPostsByPage, getPostsForTopPage } from "@/lib/notionAPI";
+import { getAllTags, getNumberOfPages, getPostsForTopPage } from "@/lib/notionAPI";
 
 export const getStaticProps: GetStaticProps = async () => {
     const displayPosts = await getPostsForTopPage(4);
