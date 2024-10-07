@@ -61,7 +61,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
             <div className="mt-10 font-medium">
                 <ReactMarkdown
-                    children={post.markdown.parent}
                     components={{
                         code(props) {
                             const { children, className, node, ...rest } = props;
@@ -80,7 +79,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
                             );
                         },
                     }}
-                ></ReactMarkdown>
+                >
+                    {post.markdown.parent}
+                </ReactMarkdown>
 
                 <Link href="/">
                     <span className="pb-20 block mt-3 text-right underline">to Home</span>
