@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 
-import { getNumberOfPages } from "@/lib/notionAPI";
 import { getPageLink } from "@/lib/page-helper";
 
 interface Props {
