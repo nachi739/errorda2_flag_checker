@@ -9,7 +9,16 @@ const notion = new Client({
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-export const getAllPosts = async () => {
+interface PostMetaData {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+    slug: string;
+    tags: string[];
+}
+
+export const getAllPosts = async (): Promise<PostMetaData[]> => {
     const posts = await notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID || "",
         page_size: 100,
@@ -27,11 +36,9 @@ export const getAllPosts = async () => {
         ],
     });
 
-    const allPosts = posts.results;
+    const allPosts = posts.results.map((result) => getPageMetaData(result as unknown as Post));
 
-    return allPosts.map((post: any) => {
-        return getPageMetaData(post as Post);
-    });
+    return allPosts;
 };
 
 interface Post {
@@ -84,15 +91,30 @@ const getPageMetaData = (post: Post) => {
     };
 };
 
-const isPost = (page: any): page is Post => {
+const isPost = (page: unknown): page is Post => {
+    const post = page as Post;
     return (
-        page &&
-        page.properties &&
-        page.properties.Title &&
-        page.properties.Description &&
-        page.properties.Date &&
-        page.properties.Slug &&
-        page.properties.Tags
+        post &&
+        typeof post.id === "string" &&
+        post.properties &&
+        post.properties.Title &&
+        Array.isArray(post.properties.Title.title) &&
+        post.properties.Title.title.length > 0 &&
+        typeof post.properties.Title.title[0].plain_text === "string" &&
+        post.properties.Description &&
+        Array.isArray(post.properties.Description.rich_text) &&
+        post.properties.Description.rich_text.length > 0 &&
+        typeof post.properties.Description.rich_text[0].plain_text === "string" &&
+        post.properties.Date &&
+        post.properties.Date.date &&
+        typeof post.properties.Date.date.start === "string" &&
+        post.properties.Slug &&
+        Array.isArray(post.properties.Slug.rich_text) &&
+        post.properties.Slug.rich_text.length > 0 &&
+        typeof post.properties.Slug.rich_text[0].plain_text === "string" &&
+        post.properties.Tags &&
+        Array.isArray(post.properties.Tags.multi_select) &&
+        post.properties.Tags.multi_select.every((tag) => typeof tag.name === "string")
     );
 };
 
