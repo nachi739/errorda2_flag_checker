@@ -33,8 +33,38 @@ export const getAllPosts = async () => {
     });
 };
 
-//今後修正する。
-const getPageMetaData = (post) => {
+interface Post {
+    id: string;
+    properties: {
+        Title: {
+            title: {
+                plain_text: string;
+            }[];
+        };
+        Description: {
+            rich_text: {
+                plain_text: string;
+            }[];
+        };
+        Date: {
+            date: {
+                start: string;
+            };
+        };
+        Slug: {
+            rich_text: {
+                plain_text: string;
+            }[];
+        };
+        Tags: {
+            multi_select: {
+                name: string;
+            }[];
+        };
+    };
+}
+
+const getPageMetaData = (post: Post) => {
     const getTags = (tags: { name: string }[]) => {
         const allTags = tags.map((tag: { name: string }) => {
             return tag.name;
