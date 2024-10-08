@@ -69,9 +69,9 @@ const PageList = ({ postsByPage, numberOfPage, allTags }: PageListProps) => {
 
             <main className="container w-full mt-16">
                 <h1 className="text-5x1 font-medium text-center mb-16">Output-list</h1>
-                <section className="sm:grid grid-cols-1 w-1/2 gap-3 mx-auto">
+                <section className="grid grid-cols-1 md:w-1/2 sm:grid-cols-1 gap-3 mx-auto">
                     {postsByPage.map((post: Post) => (
-                        <div key={post.id}>
+                        <div className="mx-4" key={post.id}>
                             <SinglePost
                                 title={post.title}
                                 description={post.description}

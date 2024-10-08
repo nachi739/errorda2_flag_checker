@@ -77,13 +77,14 @@ const TagPageList = ({ numberOfPagesByTag, posts, currentTag, allTags }: PageLis
             </Head>
 
             <main className="container w-full mt-16">
-                <h1 className="text-5x1 font-medium text-center">Output-list</h1>
+                <h1 className="text-5x1 font-medium text-center mb-16">Output-list</h1>
                 <p className="py-1.5 px-2 rounded-full mb-16 w-1/2 bg-black text-white text-center mx-auto">
                     {currentTag}
                 </p>
-                <section className="sm:grid grid-cols-1 w-1/2 gap-3 mx-auto">
+                <section className="grid grid-cols-1 md:w-1/2 sm:grid-cols-1 gap-3 mx-auto ">
+                    <section className="sm:grid grid-cols-1 gap-3 mx-auto"></section>
                     {posts.map((post: Post) => (
-                        <div key={post.id}>
+                        <div key={post.id} className="mx-4">
                             <SinglePost
                                 title={post.title}
                                 description={post.description}
