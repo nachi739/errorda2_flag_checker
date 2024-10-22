@@ -1,40 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NotionDB-outputプロジェクト
 
-## Getting Started
+このプロジェクトはNext.jsを使用して構築されたWebアプリケーションです。
 
-First, run the development server:
+## はじめに
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+このプロジェクトを始めるには、以下の手順に従ってください
+
+1. **リポジトリをクローンする:**
+
+```sh
+git clone https://github.com/yourusername/errorda2_next.js.git
+cd errorda2_next.js.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **依存関係をインストールする:**
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+yarn install
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+3. **開発サーバーを起動する:**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```sh
+yarn dev
+```
+## Vercelへのデプロイ
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Next.jsアプリをデプロイする最も簡単な方法は、Next.jsの開発者が提供する[Vercelプラットフォーム](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)を使用することです。
 
-## Learn More
+詳細については、[Next.jsのデプロイメントドキュメント](https://nextjs.org/docs/deployment)を参照してください。
 
-To learn more about Next.js, take a look at the following resources:
+## ライセンス
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+このプロジェクトは [MIT ライセンス](./LICENSE) の下でライセンスされています。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 使用しているライブラリのライセンス
+- **@notionhq/client**: [MIT License](https://github.com/makenotion/notion-sdk-js/blob/main/LICENSE)
+- **@secretlint/secretlint-rule-preset-recommend**: [MIT License](https://github.com/secretlint/secretlint/blob/main/packages/%40secretlint/secretlint-rule-preset-recommend/LICENSE)
+- **@types/node**: [MIT License](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/LICENSE)
+- **@types/react**: [MIT License](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/LICENSE)
+- **@types/react-dom**: [MIT License](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/LICENSE)
+- **@types/react-syntax-highlighter**: [MIT License](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/LICENSE)
+- **@typescript-eslint/eslint-plugin**: [MIT License](https://github.com/typescript-eslint/typescript-eslint/blob/main/LICENSE)
+- **@typescript-eslint/parser**: [MIT License](https://github.com/typescript-eslint/typescript-eslint/blob/main/LICENSE)
+- **eslint**: [MIT License](https://github.com/eslint/eslint/blob/main/LICENSE)
+- **eslint-config-next**: [MIT License](https://github.com/vercel/next.js/blob/canary/license.md)
+- **eslint-config-prettier**: [MIT License](https://github.com/prettier/eslint-config-prettier/blob/main/LICENSE)
+- **eslint-plugin-redos**: [MIT License](https://github.com/ljharb/eslint-plugin-redos/blob/main/LICENSE)
+- **eslint-plugin-simple-import-sort**: [MIT License](https://github.com/lydell/eslint-plugin-simple-import-sort/blob/main/LICENSE)
+- **next**: [MIT License](https://github.com/vercel/next.js/blob/canary/license.md)
+- **notion-to-md**: [MIT License](https://github.com/souvikinator/notion-to-md/blob/main/LICENSE)
+- **npm-run-all2**: [MIT License](https://github.com/mysticatea/npm-run-all/blob/master/LICENSE)
+- **npx**: [MIT License](https://github.com/npm/npx/blob/latest/LICENSE)
+- **postcss**: [MIT License](https://github.com/postcss/postcss/blob/main/LICENSE)
+- **prettier**: [MIT License](https://github.com/prettier/prettier/blob/main/LICENSE)
+- **react**: [MIT License](https://github.com/facebook/react/blob/main/LICENSE)
+- **react-dom**: [MIT License](https://github.com/facebook/react/blob/main/LICENSE)
+- **react-markdown**: [MIT License](https://github.com/remarkjs/react-markdown/blob/main/license)
+- **react-syntax-highlighter**: [MIT License](https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/master/LICENSE)
+- **secretlint**: [MIT License](https://github.com/secretlint/secretlint/blob/main/LICENSE)
+- **tailwindcss**: [MIT License](https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE)
+- **typescript**: [Apache License 2.0](https://github.com/microsoft/TypeScript/blob/main/LICENSE.txt)
