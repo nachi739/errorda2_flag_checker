@@ -19,7 +19,15 @@ cd errorda2_next.js.git
 yarn install
 ```
 
-3. **開発サーバーを起動する:**
+3. **.env.localファイルの作成:**
+
+```
+#ルートディレクトリ直下に作成
+NOTION_TOKEN=
+NOTION_DATABASE_ID=
+```
+
+4. **開発サーバーを起動する:**
 
 ```sh
 yarn dev
