@@ -38,6 +38,19 @@ NOTION_DATABASE_ID=
 ```sh
 yarn dev
 ```
+
+5. **Lint系のチェックコマンド:**
+
+```sh
+yarn lint
+```
+
+6. **lint系のエラー修正コマンド:**
+
+```sh
+yarn fix
+```
+
 ## Vercelへのデプロイ
 
 Next.jsアプリをデプロイする最も簡単な方法は、Next.jsの開発者が提供する[Vercelプラットフォーム](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)を使用することです。
