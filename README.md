@@ -19,18 +19,77 @@ git clone https://github.com/yourusername/errorda2_next.js.git
 cd errorda2_next.js.git
 ```
 
-2. **依存関係をインストールする:**
+2. **.env.localファイルの作成:**
+
+```sh
+# ルートディレクトリ直下に作成
+NOTION_TOKEN=NotionTokenKeyを記載
+NOTION_DATABASE_ID=NotionDATABASEIDを記載
+```
+
+3. **Dockerで環境構築・起動:**
+
+```sh
+cd docker
+# backgroundで起動
+docker-compose up -d
+or
+# foregroundで起動
+docker-compose up
+```
+
+4. **Lint系のチェックコマンド:**
+
+```sh
+# コンテナに入って実行
+docker exec -it errorda2-app /bin/sh
+yarn lint
+```
+
+5. **lint系のエラー修正コマンド:**
+
+```sh
+# コンテナに入って実行
+docker exec -it errorda2-app /bin/sh
+yarn fix
+```
+
+6. **停止コマンド:**
+
+```sh
+cd docker
+# background
+docker-compose stop
+or
+# foreground
+control + c
+```
+
+## Dockerを利用せずローカルでの開発環境構築
+
+ 前提準備
+ - Node.jsのインストール（使用バージョン:14.2.12）
+ - yarnのインストール（使用バージョン:v1.22.19）
+
+1. **リポジトリをクローンする:**
+
+```sh
+git clone https://github.com/yourusername/errorda2_next.js.git
+cd errorda2_next.js.git
+```
+
+2. **.env.localファイルの作成:**
+
+```sh
+# ルートディレクトリ直下に作成
+NOTION_TOKEN=NotionTokenKeyを記載
+NOTION_DATABASE_ID=NotionDATABASEIDを記載
+```
+
+3. **依存関係をインストールする:**
 
 ```sh
 yarn install
-```
-
-3. **.env.localファイルの作成:**
-
-```
-#ルートディレクトリ直下に作成
-NOTION_TOKEN=
-NOTION_DATABASE_ID=
 ```
 
 4. **開発サーバーを起動する:**
