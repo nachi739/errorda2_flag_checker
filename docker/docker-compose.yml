@@ -1,0 +1,12 @@
+services:
+  app:
+    container_name: errorda2-app
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ..:/app:delegated
+    command: yarn dev
