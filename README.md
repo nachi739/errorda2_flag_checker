@@ -15,8 +15,8 @@ NotionDBのPublishedテーブルのフラグが有効になっているものを
 1. **リポジトリをクローンする:**
 
 ```sh
-git clone https://github.com/yourusername/errorda2_next.js.git
-cd errorda2_next.js.git
+git clone https://github.com/yourusername/errorda2_flag_checker.git
+cd errorda2_flag_checker.git
 ```
 
 2. **.env.localファイルの作成:**
@@ -74,8 +74,8 @@ control + c
 1. **リポジトリをクローンする:**
 
 ```sh
-git clone https://github.com/yourusername/errorda2_next.js.git
-cd errorda2_next.js.git
+git clone https://github.com/yourusername/errorda2_flag_checker.git
+cd errorda2_flag_checker.git
 ```
 
 2. **.env.localファイルの作成:**
